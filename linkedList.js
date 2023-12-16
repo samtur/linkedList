@@ -11,7 +11,24 @@ class LinkedList {
     this.size = 0;
   }
 
-  add(data) {
+  getSize() {
+    console.log(this.size);
+  }
+
+  getHead() {
+    console.log(this.head);
+  }
+
+  getTail() {
+    var current;
+    current = this.head;
+    while (current.next) {
+      current = current.next;
+    }
+    console.log(current);
+  }
+
+  append(data) {
     var node = new Node(data);
     var current;
     if (this.head === null) this.head = node;
@@ -22,6 +39,13 @@ class LinkedList {
       }
       current.next = node;
     }
+    this.size++;
+  }
+
+  prepend(data) {
+    var node = new Node(data);
+    node.next = this.head;
+    this.head = node;
     this.size++;
   }
 
@@ -38,8 +62,11 @@ class LinkedList {
 
 let ll = new LinkedList();
 
-ll.add(12);
-ll.add(54);
-ll.add(25);
-
+ll.append(12);
+ll.append(54);
+ll.append(25);
+ll.prepend(11);
+ll.getSize();
+ll.getHead();
+ll.getTail();
 ll.printList();
