@@ -58,6 +58,53 @@ class LinkedList {
     }
     console.log(str);
   }
+
+  atIndex(index) {
+    var current = this.head;
+    var count = 0;
+    while (current) {
+      if (count === index) {
+        console.log(current);
+        return current;
+      } else {
+        count++;
+        current = current.next;
+      }
+    }
+    console.log("No data found.");
+    return;
+  }
+
+  pop() {
+    // If there is nothing to pop
+    if (!this.head) {
+      console.log("List is empty, nothing to pop!");
+      return;
+    }
+
+    // If there is only one node
+    if (!this.head.next) {
+      this.head = null;
+      this.size--;
+      return;
+    }
+
+    // Iterate through the list
+    let current = this.head;
+    let previous = null;
+
+    // Every iteration update previous to point to the previous node,
+    // and current to point to next.
+    while (current.next) {
+      previous = current;
+      current = current.next;
+    }
+
+    // When finished set the previous node's pointer to null;
+    // and -- the size of the linked list by 1
+    previous.next = null;
+    this.size--;
+  }
 }
 
 let ll = new LinkedList();
@@ -66,7 +113,7 @@ ll.append(12);
 ll.append(54);
 ll.append(25);
 ll.prepend(11);
-ll.getSize();
-ll.getHead();
-ll.getTail();
+ll.pop();
+ll.atIndex(2);
+
 ll.printList();
