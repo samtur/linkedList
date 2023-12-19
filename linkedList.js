@@ -53,9 +53,10 @@ class LinkedList {
     var current = this.head;
     var str = "";
     while (current) {
-      str += current.data + " ";
+      str += `(${current.data}) => `;
       current = current.next;
     }
+    str += `null`;
     console.log(str);
   }
 
@@ -105,6 +106,67 @@ class LinkedList {
     previous.next = null;
     this.size--;
   }
+
+  contains(value) {
+    let current = this.head;
+
+    while (current) {
+      if (current.data === value) {
+        console.log(true);
+        return true;
+      }
+      current = current.next;
+    }
+    console.log(false);
+    return false;
+  }
+
+  find(value) {
+    let current = this.head;
+    let index = 0;
+
+    while (current) {
+      if (current.data === value) {
+        console.log(index);
+        return index;
+      }
+      current = current.next;
+      index++;
+    }
+    console.log("No data matches this value.");
+    return;
+  }
+
+  insertAt(value, index) {
+    let current = this.head;
+    let previous = null;
+    let count = 0;
+    var node = new Node(value);
+
+    if (count === 0 && index === 0) {
+      node.next = this.head;
+      this.head = node;
+      this.size++;
+      return;
+    }
+
+    while (current) {
+      if (index === count) {
+        node.next = current;
+        current = node;
+        previous.next = current;
+        this.size++;
+        return;
+      }
+      previous = current;
+      current = current.next;
+      count++;
+    }
+
+    // Find way to append value to the end of the linked list using insertAt method.
+    current.next = node;
+    return;
+  }
 }
 
 let ll = new LinkedList();
@@ -113,7 +175,5 @@ ll.append(12);
 ll.append(54);
 ll.append(25);
 ll.prepend(11);
-ll.pop();
-ll.atIndex(2);
-
+ll.insertAt(14, 3);
 ll.printList();
