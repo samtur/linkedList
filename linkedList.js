@@ -13,10 +13,12 @@ class LinkedList {
 
   getSize() {
     console.log(this.size);
+    return;
   }
 
   getHead() {
     console.log(this.head);
+    return;
   }
 
   getTail() {
@@ -26,6 +28,7 @@ class LinkedList {
       current = current.next;
     }
     console.log(current);
+    return;
   }
 
   append(data) {
@@ -141,8 +144,15 @@ class LinkedList {
     let current = this.head;
     let previous = null;
     let count = 0;
-    var node = new Node(value);
+    const node = new Node(value);
 
+    // Checks if index is valid not below 0 or greater than linked list size
+    if (index > this.size || index < 0) {
+      console.log(`Please enter an index between 0 and ${this.size}.`);
+      return;
+    }
+
+    // Allows us to prepend if index = 0
     if (count === 0 && index === 0) {
       node.next = this.head;
       this.head = node;
@@ -150,6 +160,7 @@ class LinkedList {
       return;
     }
 
+    // Iterates through the list and inserts at the index
     while (current) {
       if (index === count) {
         node.next = current;
@@ -163,9 +174,59 @@ class LinkedList {
       count++;
     }
 
-    // Find way to append value to the end of the linked list using insertAt method.
+    // Allows us to append to the end if the last index is used.
+    count = 0;
+    current = this.head;
+    while (current.next) {
+      current = current.next;
+    }
     current.next = node;
+    this.size++;
     return;
+  }
+
+  removeAt(index) {
+    // Checking for a valid index
+    if (index > this.size - 1 || index < 0) {
+      console.log(`Please enter an index between 0 and ${this.size - 1}`);
+      return;
+    }
+
+    // Checking the list is not empty
+    if (!this.head) {
+      console.log("List is empty, nothing to remove!");
+      return;
+    }
+
+    // Checking if only 1 node.
+    if (!this.head.next) {
+      this.head = null;
+      this.size--;
+      return;
+    }
+
+    let current = this.head;
+    let previous = null;
+    let count = 0;
+
+    // Checking if removing from index 0
+    if (index === 0) {
+      this.head = current.next;
+      this.size--;
+      return;
+    }
+
+    // Iterate through the list and remov when count matches index
+    while (current) {
+      if (count === index) {
+        previous.next = current.next;
+        this.size--;
+        return;
+      }
+      previous = current;
+      current = current.next;
+      count++;
+    }
   }
 }
 
@@ -175,5 +236,7 @@ ll.append(12);
 ll.append(54);
 ll.append(25);
 ll.prepend(11);
-ll.insertAt(14, 3);
+ll.append(200);
+ll.printList();
+ll.removeAt(0);
 ll.printList();
